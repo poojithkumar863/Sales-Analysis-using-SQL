@@ -102,12 +102,9 @@ HAVING SUM(Total_Amount) > 50000;
 
 
 -- 10) Find the top 5 customers by sales revenue using DENSE_RANK ()
-with t5 as(
-    SELECT 
-        Customer_Name,
-        SUM(Total_Amount) AS Total_Sales,
-        DENSE_RANK() OVER (ORDER BY SUM(Total_Amount) DESC) AS Customer_rank
-    FROM da_sales
-    GROUP BY Customer_Name
-) select * from t5
-WHERE customer_rank <= 5;
+ SELECT Customer_Name,SUM(Total_Amount) AS Total_Sales, 
+DENSE_RANK() OVER (ORDER BY SUM(Total_Amount) DESC) AS Rnk
+FROM sales
+GROUP BY Customer_Name
+order by rnk
+limit 5;
